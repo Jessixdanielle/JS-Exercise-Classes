@@ -90,19 +90,16 @@ class Airplane {
      this.tank += gallons;
    }
     
-   drive(distance, milesPerGallon){
-     if(((this.milesPerGallon * this.tank)- distance)>= 0){
-      this.odometer += distance;
-      this.tank -= (distance/this.milesPerGallon);
+   drive( distance ){
+    if(distance >= this.tank * this.milesPerGallon){
+      this.odometer += this.tank * this.milesPerGallon;
+      this.tank = 0;
+      return `I ran out of fuel at ${this.odometer} miles!`;
     }
     else{
-      // for(let i=0; i<= distance; i++){
-      //   let count= i
-      // }
-      // this.odometer+=count
-      // return `I ran out of fuel at ${distance-count} miles!`
+      this.odometer += distance;
+      this.tank = ((this.tank * this.milesPerGallon) - distance) / this.milesPerGallon;
     }
-    
   }
 }
   
@@ -184,6 +181,18 @@ class Airplane {
       this.className = obj.className;
       this.favSubjects = obj.favSubjects;
      }
+
+     listSubjects(){
+       return (`Loving ${this.favSubjects}`)
+     }
+
+     PRAssignment(subject){
+      return (`${this.name} has submitted a PR for ${subject}`)
+     }
+
+     sprintChallenge(subject){
+       return (`${this.name} has begun sprint challenge on ${subject}`)
+     }
  }
   
   /*
@@ -199,8 +208,20 @@ class Airplane {
           + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
           + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
   */
- class ProjectManager {
-     
+ class ProjectManager extends Instructor{
+     constructor(obj){
+       super(obj);
+       this.gradClassName = obj.gradClassName;
+       this.favInstructor = obj.favInstructor;
+     }
+
+     standUp(slackCh){
+      return (`${this.name} announces to ${slackCh}, @channel standy times!`)
+     }
+
+     debugsCode(studentobj, subject){
+      return (`${this.name} debugs ${studentobj.name}'s code on ${subject}`)
+     }
  }
   /*
     STRETCH PROBLEM (no tests!)
